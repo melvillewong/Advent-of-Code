@@ -1,1 +1,0 @@
-/home/melville/workplace/challenges/advent_of_code/2022/day-09/target/debug/part2: /home/melville/workplace/challenges/advent_of_code/2022/day-09/src/bin/part2.rs /home/melville/workplace/challenges/advent_of_code/2022/day-09/src/input.txt

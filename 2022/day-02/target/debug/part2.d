@@ -1,1 +1,0 @@
-/home/melville/workplace/tutorials/rusty/advent_of_code/2022/day-02/target/debug/part2: /home/melville/workplace/tutorials/rusty/advent_of_code/2022/day-02/src/bin/part2.rs /home/melville/workplace/tutorials/rusty/advent_of_code/2022/day-02/src/input.txt

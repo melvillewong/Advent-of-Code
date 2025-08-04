@@ -1,9 +1,0 @@
-/home/melville/workplace/tutorials/rusty/advent_of_code/2022/day-07/target/debug/deps/libpart1_v2-674cdce59b76d560.rmeta: src/bin/part1-v2.rs Cargo.toml
-
-/home/melville/workplace/tutorials/rusty/advent_of_code/2022/day-07/target/debug/deps/part1_v2-674cdce59b76d560.d: src/bin/part1-v2.rs Cargo.toml
-
-src/bin/part1-v2.rs:
-Cargo.toml:
-
-# env-dep:CLIPPY_ARGS=--no-deps__CLIPPY_HACKERY__
-# env-dep:CLIPPY_CONF_DIR
