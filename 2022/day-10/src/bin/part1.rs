@@ -1,24 +1,10 @@
 fn main() {
     let input = include_str!("../input.txt");
-    let res = draw_crt(input);
+    let res = calc_signal(input);
+    dbg!(res);
 }
 
-/*
-* Sprite = A 3-pixels wide painter, change pos by addx after 2 cycles
-* CRT cell's pixel can be [lit(#) or dark(.)] depends on whether sprite is overlapping it (any
-*   pixel of its body)
-*/
-
-/*
-* 1. Cycle 1 == CRT cell pixel 1
-* 2. Keep track of addx POS, save POS±1 (3 pos)
-* 3. Check if curr cycle == 1 of the 3 saved sprite pos
-*   - True (overlap) = draw "#"
-*   - False = draw "."
-* 4. Jump to \n if cycle is multiple of 40 (\n and mod 40)
-*/
-
-fn draw_crt(input: &str) {
+fn calc_signal(input: &str) -> i32 {
     let mut cycle = 0;
     let mut signal = 1;
     let mut target_cycle = [20, 60, 100, 140, 180, 220].iter().peekable();
@@ -38,6 +24,7 @@ fn draw_crt(input: &str) {
             signal += value.parse::<i32>().unwrap();
         }
     }
+    signal_strength.iter().sum()
 }
 
 #[cfg(test)]
@@ -192,6 +179,6 @@ addx -11
 noop
 noop
 noop";
-        assert_eq!(draw_crt(input), 13140);
+        assert_eq!(calc_signal(input), 13140);
     }
 }

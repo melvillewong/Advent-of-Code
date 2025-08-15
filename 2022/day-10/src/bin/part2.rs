@@ -1,30 +1,59 @@
 fn main() {
     let input = include_str!("../input.txt");
-    let res = calc_signal(input);
-    dbg!(res);
+    let res = draw_crt(input);
+    println!("{}", res);
 }
 
-fn calc_signal(input: &str) -> i32 {
+/*
+* Sprite = A 3-pixels wide painter, change pos by addx after 2 cycles
+* CRT cell's pixel can be [lit(#) or dark(.)] depends on whether sprite is overlapping it (any
+*   pixel of its body)
+*/
+
+/*
+* 1. Cycle 1 == CRT cell pixel 1
+* 2. Keep track of addx POS, save POS±1 (3 pos)
+* 3. Check if curr cycle == 1 of the 3 saved sprite pos
+*   - True (overlap) = draw "#"
+*   - False = draw "."
+* 4. Jump to \n if cycle is multiple of 40 (\n and mod 40)
+*/
+
+fn draw_crt(input: &str) -> String {
+    let mut crt = String::new();
+    const MAX_CYCLE: i32 = 240;
     let mut cycle = 0;
-    let mut signal = 1;
-    let mut target_cycle = [20, 60, 100, 140, 180, 220].iter().peekable();
-    let mut signal_strength = Vec::<i32>::new();
-    for line in input.lines() {
+    let mut sprite = 1;
+
+    'outer: for line in input.lines() {
         let (instr, value) = line.split_once(" ").unwrap_or((line, "0"));
         let cycles_per_instr = if instr == "addx" { 2 } else { 1 };
 
-        for _ in 0..cycles_per_instr {
-            cycle += 1;
-            if target_cycle.peek().is_some_and(|&&c| cycle == c) {
-                signal_strength.push(target_cycle.next().unwrap() * signal);
+        '_inner: for _ in 0..cycles_per_instr {
+            if cycle % 40 == 0 && cycle != 0 {
+                cycle %= 40;
+                crt.push('\n');
+            } else if cycle == MAX_CYCLE {
+                break 'outer;
             }
+            if is_overlap(cycle, sprite) {
+                crt.push('#');
+            } else {
+                crt.push('.');
+            }
+            cycle += 1;
         }
 
         if instr == "addx" {
-            signal += value.parse::<i32>().unwrap();
+            sprite += value.parse::<i32>().unwrap();
         }
     }
-    signal_strength.iter().sum()
+
+    crt
+}
+
+fn is_overlap(cycle: i32, sprite: i32) -> bool {
+    cycle == sprite - 1 || cycle == sprite || cycle == sprite + 1
 }
 
 #[cfg(test)]
@@ -179,6 +208,12 @@ addx -11
 noop
 noop
 noop";
-        assert_eq!(calc_signal(input), 13140);
+        let ans = "##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....";
+        assert_eq!(draw_crt(input), ans);
     }
 }
