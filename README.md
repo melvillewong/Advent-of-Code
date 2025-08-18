@@ -18,9 +18,7 @@ rm ./2022/day-01/src/main.rs
 
 ### Script
 
-`./create_template.sh <year> <date>`
-
-To create template in `./<year>/<date>`
+`./create_template.sh <year> <date>` to create template in `./<year>/<date>`
 
 Example:
 
